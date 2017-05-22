@@ -12,7 +12,7 @@ $(".guesses-left").text("Guesses Left: " + guessesLeft);
 $(".wrong-guess").text("Wrong Guesses: " + wrongGuess);
 
 function randomWord() {
-	var words = ["budweiser", "coors"];
+	var words = ["budweiser", "coors", "modelo", "busch", "stone", "stella", "corona", "kona"];
 	return words[Math.floor(Math.random() * words.length)];	
 }
 
