@@ -36,7 +36,7 @@ document.onkeyup = guessCheck;
 
 function guessCheck(event) {
 	$(".guesses-left").text("Guesses Left: " + guessesLeft);
-	$(".wrong-guess").text("Wrong Guesses: " + wrongGuess);
+	$(".wrong-guess").text("Wrong Guesses: " + wrongGuessedLetters);
 
 	if (event.keyCode <= 90 && event.keyCode >= 65 && $.inArray(event.key, wrongGuessedLetters)) {
 	var guess = event.key;
