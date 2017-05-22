@@ -1,6 +1,6 @@
 
 var wrongGuess = 0;
-var guessesLeft = 0;
+var guessesLeft = 10;
 var wrongGuessedLetters = [];
 var correctGuessedLetters = [];
 var correctGuess = 0;
@@ -8,8 +8,6 @@ var chosenWord;
 var wins = 0;
 var lose = 0;
 
-$(".guesses-left").text("Guesses Left: " + guessesLeft);
-$(".wrong-guess").text("Wrong Guesses: " + wrongGuess);
 
 function randomWord() {
 	var words = ["budweiser", "coors", "modelo", "busch", "stone", "stella", "corona", "kona"];
@@ -37,6 +35,8 @@ document.onkeyup = guessCheck;
 
 
 function guessCheck(event) {
+	$(".guesses-left").text("Guesses Left: " + guessesLeft);
+	$(".wrong-guess").text("Wrong Guesses: " + wrongGuess);
 
 	if (event.keyCode <= 90 && event.keyCode >= 65 && $.inArray(event.key, wrongGuessedLetters)) {
 	var guess = event.key;
@@ -48,12 +48,14 @@ function guessCheck(event) {
 			for (var i = 0; i < chosenWord.length; i++) {
 				if (guess == chosenWord[i]) {
 		 			$("#" + i).text(chosenWord[i]);
-		 			correctGuess++;	 			
+		 			correctGuess++;
+		 			guessesLeft--;	 			
 				}
 			}
 		}
 		if (letterGuess == -1) {
 			wrongGuess++;
+			guessesLeft--;
 			console.log(wrongGuess);
 			wrongGuessedLetters.push(guess);
 		}
@@ -61,9 +63,15 @@ function guessCheck(event) {
 	if (correctGuess >= (chosenWord.length)) {
 		win();
 	}
-	if (wrongGuess >= (chosenWord.length)) {
+	if (wrongGuess >= 8 || guessesLeft <= 0) {
 		lose();
 	}
+	function lose() {
+	lose++;
+	
+	alert("You Lose!");
+	reset();
+}
 	
 }
 
@@ -74,15 +82,9 @@ function win() {
 	alert("You Win!");
 	reset();
 }
-function lose() {
-	lose++;
-	
-	alert("You Lose!");
-	reset();
-}
 function reset() {
 	wrongGuess = 0;
-	guessesLeft = 0;
+	guessesLeft = 10;
 	wrongGuessedLetters = [];
 	correctGuessedLetters = [];
 	correctGuess = 0;
