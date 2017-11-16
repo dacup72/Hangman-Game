@@ -1,17 +1,21 @@
 
 //================GLOBAL VARIABLES===============
-var wrongGuess = 0;
-var guessesLeft = 9;
-var wrongGuessedLetters = [];
-var correctGuessedLetters = [];
-var correctGuess = 0;
-var chosenWord;
+var guessesLeft;
 var wins = 0;
-var lose = 0;
+var losses = 0;
+
+// var wrongGuesses = 0;
+// var wrongGuessedLetters = [];
+// var correctGuessedLetters = [];
+// var correctGuess = 0;
+// var chosenWord;
+
 
 
 //=============== OBJECTS / FUNCTIONS ===============
 var game = {
+	wordsArray: ["budweiser", "coors", "modelo", "busch", "stone", "stella", "corona", "kona"],
+	randomWord: "",
 	win: function() {
 		//info box for winning
 		wins++;
@@ -19,20 +23,33 @@ var game = {
 	},
 	lose: function() {
 		//info box for losing
-		loses++;
+		losses++;
 		game.reset();
 	},
 	reset: function() {
 		guessesLeft = 9
-		//choose random word
-		//
+		randomWord = [Math.floor(Math.random() * wordsArray.length)];
 	},
-	randomWord: function() {
-		var randomWord = ["budweiser", "coors", "modelo", "busch", "stone", "stella", "corona", "kona"];
-		return randomWord[Math.floor(Math.random() * words.length)];
+	compareGuess: function() {
+		
 	}
 }
 
+var page = {
+
+}
+
+
+
+//=============== PROCESS ================
+$(document).ready(function() {
+	reset();
+	document.onkeyup = function(event) {
+		if(event.keyCode <= 90 && event.keyCode >= 65) {
+
+		}
+	}
+});
 
 
 
