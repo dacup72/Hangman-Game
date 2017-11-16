@@ -3,6 +3,7 @@
 var guessesLeft;
 var wins = 0;
 var losses = 0;
+var userGuess;
 
 // var wrongGuesses = 0;
 // var wrongGuessedLetters = [];
@@ -14,6 +15,7 @@ var losses = 0;
 
 //=============== OBJECTS / FUNCTIONS ===============
 var game = {
+	guessedLetters: [],
 	wordsArray: ["budweiser", "coors", "modelo", "busch", "stone", "stella", "corona", "kona"],
 	randomWord: "",
 	win: function() {
@@ -29,14 +31,41 @@ var game = {
 	reset: function() {
 		guessesLeft = 9
 		randomWord = [Math.floor(Math.random() * wordsArray.length)];
+		guessedLetters = [];
 	},
-	compareGuess: function() {
-		
+	compareGuess: function(userGuess) {
+		if(!guessedLetters.indexOf(userGuess)) {
+			guessedLetters.push(userGuess);
+			page.addLetter();
+		} else {
+			page.addHangMan();
+			guessesLeft--;
+		}
+	},
+	compareScore: function() {
+		if(userWord === randomWord) {
+			game.win();
+		} else {
+			game.lose();
+		}
+	},
+	wordToLetters: function(word) {
+		word.toLowerCase().split("");
+		return word;
+	},
+	lettersToWord: function(word) {
+		word.toLowerCase().split(" ").join("");
+		return word;
 	}
 }
 
 var page = {
+	addLetter: function() {
 
+	},
+	addHangMan: function() {
+
+	}
 }
 
 
@@ -45,7 +74,9 @@ var page = {
 $(document).ready(function() {
 	reset();
 	document.onkeyup = function(event) {
-		if(event.keyCode <= 90 && event.keyCode >= 65) {
+		if(event.keyCode <= 90 && event.keyCode >= 65 && !guessesLeft === 0) {
+
+		} else {
 
 		}
 	}
