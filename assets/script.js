@@ -1,52 +1,43 @@
 
-//================GLOBAL VARIABLES===============
-var guessesLeft;
-var wins = 0;
-var losses = 0;
-var userGuess;
-
-// var wrongGuesses = 0;
-// var wrongGuessedLetters = [];
-// var correctGuessedLetters = [];
-// var correctGuess = 0;
-// var chosenWord;
-
-
 
 //=============== OBJECTS / FUNCTIONS ===============
 var game = {
-	guessedLetters: [],
+	wins: 0,
+	losses: 0,
+	guessesLeft: 0,
 	wordsArray: ["budweiser", "coors", "modelo", "busch", "stone", "stella", "corona", "kona"],
-	randomWord: "",
+	chosenWord: "",
+	letterGuessed: "",
+	guessedLetters: [],
 	win: function() {
 		//info box for winning
-		wins++;
-		game.reset();
+		this.wins++;
+		this.reset();
 	},
 	lose: function() {
 		//info box for losing
-		losses++;
-		game.reset();
+		this.losses++;
+		this.reset();
 	},
 	reset: function() {
-		guessesLeft = 9
-		randomWord = [Math.floor(Math.random() * wordsArray.length)];
-		guessedLetters = [];
+		this.guessesLeft = 9
+		this.chosenWord = [Math.floor(Math.random() * this.wordsArray.length)];
+		this.guessedArray = [];
+		this.letterGuessed = "";
+
 	},
-	compareGuess: function(userGuess) {
-		if(!guessedLetters.indexOf(userGuess)) {
-			guessedLetters.push(userGuess);
-			page.addLetter();
+	compareGuess: function() {
+		if(!this.guessedArray.indexOf(this.letterGuessed)) {
+			this.guessedArray.push(this.letterGuessed);
+			this.addLetter();
 		} else {
-			page.addHangMan();
-			guessesLeft--;
+			this.addHangMan();
+			this.guessesLeft--;
 		}
 	},
 	compareScore: function() {
-		if(userWord === randomWord) {
-			game.win();
-		} else {
-			game.lose();
+		if(this.userWord === this.chosenWord) {
+			this.win();
 		}
 	},
 	wordToLetters: function(word) {
@@ -56,15 +47,22 @@ var game = {
 	lettersToWord: function(word) {
 		word.toLowerCase().split(" ").join("");
 		return word;
-	}
-}
-
-var page = {
-	addLetter: function() {
+	},
+	process: function() {
+		if(this.guessesLeft >= 1) {
+			this.compareGuess();
+			this.compareScore();
+		} else {
+			this.lose();
+		}
+		
 
 	},
+	addLetter: function() {
+		
+	},
 	addHangMan: function() {
-
+		
 	}
 }
 
@@ -72,12 +70,13 @@ var page = {
 
 //=============== PROCESS ================
 $(document).ready(function() {
-	reset();
+	game.reset();
 	document.onkeyup = function(event) {
-		if(event.keyCode <= 90 && event.keyCode >= 65 && !guessesLeft === 0) {
-
+		if(event.keyCode <= 90 && event.keyCode >= 65) {
+			game.letterGuessed = String.fromCharCode(event.keyCode).toLowerCase();
+			game.process();
 		} else {
-
+			//that is not a letter, please guess a letter
 		}
 	}
 });
